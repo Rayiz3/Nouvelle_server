@@ -1,11 +1,11 @@
 from flask import Flask
 from flask_cors import CORS
-from src.routes.user import users_bp
+from src.routes.users import users_bp
 
 
 app = Flask(__name__)
 
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.register_blueprint(users_bp, url_prefix='/users')
 
