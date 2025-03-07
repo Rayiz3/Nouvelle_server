@@ -16,7 +16,7 @@ users_bp = Blueprint('users', __name__)
 user_bp = Blueprint('user', __name__)
 
     
-@users_bp.route('/', methods=['POST'])
+@users_bp.route('', methods=['POST'])
 def add_user():
     try:
         # load json data
@@ -51,11 +51,12 @@ def add_user():
         logging.error(f"Unexpected error: {str(e)}")
         return jsonify({"message": "Internal server error", "error": str(e)}), 500
     
-@user_bp.route('/', methods=['GET'])
+@user_bp.route('', methods=['GET'])
 def get_user():
     try:
         # load url data
         email = request.args.get("email")
+        logging.info(f"Received request for email: {email}")
         
         if email:
             found_user = collection_users.find_one({"email": email})
