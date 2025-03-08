@@ -61,6 +61,7 @@ def get_user():
         if email:
             found_user = collection_users.find_one({"email": email})
             if found_user:
+                found_user['_id'] = str(found_user['_id'])
                 return jsonify(found_user), 200
             else:
                 return jsonify({"message": "Email not found"}), 404
