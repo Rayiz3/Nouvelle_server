@@ -3,6 +3,7 @@ from flask import Blueprint, request, jsonify
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 from pydantic import ValidationError
+from bson import ObjectId
 
 from src.collections.User import User
 
@@ -15,6 +16,25 @@ collection_users = nouvelle['Users'] # collection
 users_bp = Blueprint('users', __name__)
 user_bp = Blueprint('user', __name__)
 
+
+@users_bp.route('', methods=['GET'])
+def get_users():
+    try:
+        users = list(collection_users.find())
+        
+        # Convert ObjectId -> string
+        for user in users:
+            user['_id'] = str(user['_id'])
+
+        return jsonify(users), 200
+
+    except PyMongoError as e:
+        logging.error(f"Database error: {str(e)}")
+        return jsonify({"message": "Database error", "error": str(e)}), 500
+
+    except Exception as e:
+        logging.error(f"Unexpected error: {str(e)}")
+        return jsonify({"message": "Internal server error", "error": str(e)}), 500
     
 @users_bp.route('', methods=['POST'])
 def add_user():
@@ -54,19 +74,23 @@ def add_user():
 @user_bp.route('', methods=['GET'])
 def get_user():
     try:
-        # load url data
+        id = request.args.get("id")
         email = request.args.get("email")
-        logging.info(f"Received request for email: {email}")
         
-        if email:
+        if id:
+            # convert string -> ObjectId
+            id = ObjectId(id)
+            found_user = collection_users.find_one({"_id": id})
+        elif email:
             found_user = collection_users.find_one({"email": email})
-            if found_user:
-                found_user['_id'] = str(found_user['_id'])
-                return jsonify(found_user), 200
-            else:
-                return jsonify({"message": "Email not found"}), 404
         else:
-            return jsonify({"message": "Email not provided"}), 400
+            return jsonify({"message": "id or email is not given"}), 400
+        
+        if found_user:
+            found_user['_id'] = str(found_user['_id'])
+            return jsonify(found_user), 200
+        else:
+            return jsonify({"message": "Email not found"}), 404
         
     # error with MongoDB
     except PyMongoError as e:
