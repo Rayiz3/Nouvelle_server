@@ -10,4 +10,9 @@ class User(BaseModel):
             'email': self.email,
             'password': self.password,
             'name': self.name,
+            'config': {
+                'color': '#ffffff',
+                'stacks': [],
+                'links': []
+            }
         }
