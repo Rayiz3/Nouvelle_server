@@ -101,3 +101,39 @@ def get_user():
     except Exception as e:
         logging.error(f"Unexpected error: {str(e)}")
         return jsonify({"message": "Internal server error", "error": str(e)}), 500
+    
+@user_bp.route('/config', methods=['PATCH'])
+def set_config():
+    try:
+        id = request.args.get("id")
+        if id:
+            id = ObjectId(id)
+        else:
+            return jsonify({"message": "id is not given"}), 400
+        
+        config_data = request.get_json()
+        if not config_data:
+            return jsonify({"message": "Config data not privided"}), 400
+        
+        # update
+        result = collection_users.update_one(
+            {"_id": id},
+            {"$set": {"config": config_data}}
+        )
+        
+        if result.matched_count:
+            found_user = collection_users.find_one({"_id": id})
+            found_user['_id'] = str(found_user['_id'])
+            return jsonify(found_user), 200
+        else:
+            return jsonify({"message": "id not found"}), 404
+        
+    # error with MongoDB
+    except PyMongoError as e:
+        logging.error(f"Database error: {str(e)}")
+        return jsonify({"message": "Database error", "error": str(e)}), 500
+
+    # internal server error
+    except Exception as e:
+        logging.error(f"Unexpected error: {str(e)}")
+        return jsonify({"message": "Internal server error", "error": str(e)}), 500
