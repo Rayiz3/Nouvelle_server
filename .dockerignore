@@ -102,3 +102,5 @@ nouvelle\Lib\site-packages\CORScanner\site
 # mypy
 nouvelle\Lib\site-packages\CORScanner\**\.mypy_cache
 fly.toml
+
+!requirements.txt
