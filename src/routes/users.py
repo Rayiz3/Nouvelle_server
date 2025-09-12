@@ -7,7 +7,7 @@ from bson import ObjectId
 
 from src.collections.User import User
 
-MONGOURI = "mongodb+srv://jusmint:rayiz3@nouvelle.c8ucr.mongodb.net/?retryWrites=true&w=majority&appName=nouvelle"
+MONGOURI = "mongodb+srv://jusmint:rayiz3@nouvelle.c8ucr.mongodb.net/?retryWrites=true&w=majority&appName=nouvelle&tls=true"
 
 client = MongoClient(MONGOURI)
 nouvelle = client['nouvelle'] # cluster
