@@ -5,7 +5,7 @@ from src.routes.users import users_bp, user_bp
 
 
 app = Flask(__name__)
-PORT = int(os.environ.get("PORT", 5000))
+PORT = int(os.environ.get("PORT", 8080))
 
 CORS(app, resources={r"/*": {"origins": "*"}})
 

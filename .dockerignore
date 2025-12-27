@@ -1,106 +1,33 @@
-# flyctl launch added from nouvelle\Lib\site-packages\CORScanner\.gitignore
-# Byte-compiled / optimized / DLL files
-nouvelle\Lib\site-packages\CORScanner\**\__pycache__
-nouvelle\Lib\site-packages\CORScanner\**\*.py[cod]
-nouvelle\Lib\site-packages\CORScanner\**\*$py.class
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+venv/
 
-# C extensions
-nouvelle\Lib\site-packages\CORScanner\**\*.so
+# Git
+.git/
+.gitignore
 
-# Distribution / packaging
-nouvelle\Lib\site-packages\CORScanner\**\.Python
-nouvelle\Lib\site-packages\CORScanner\**\env
-nouvelle\Lib\site-packages\CORScanner\**\build
-nouvelle\Lib\site-packages\CORScanner\**\develop-eggs
-nouvelle\Lib\site-packages\CORScanner\**\dist
-nouvelle\Lib\site-packages\CORScanner\**\downloads
-nouvelle\Lib\site-packages\CORScanner\**\eggs
-nouvelle\Lib\site-packages\CORScanner\**\.eggs
-nouvelle\Lib\site-packages\CORScanner\**\lib
-nouvelle\Lib\site-packages\CORScanner\**\lib64
-nouvelle\Lib\site-packages\CORScanner\**\parts
-nouvelle\Lib\site-packages\CORScanner\**\sdist
-nouvelle\Lib\site-packages\CORScanner\**\var
-nouvelle\Lib\site-packages\CORScanner\**\wheels
-nouvelle\Lib\site-packages\CORScanner\**\*.egg-info
-nouvelle\Lib\site-packages\CORScanner\**\.installed.cfg
-nouvelle\Lib\site-packages\CORScanner\**\*.egg
-nouvelle\Lib\site-packages\CORScanner\**\.vscode
+# Node
+node_modules/
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-nouvelle\Lib\site-packages\CORScanner\**\*.manifest
-nouvelle\Lib\site-packages\CORScanner\**\*.spec
+# OS / Editor
+.DS_Store
+Thumbs.db
 
-# Installer logs
-nouvelle\Lib\site-packages\CORScanner\**\pip-log.txt
-nouvelle\Lib\site-packages\CORScanner\**\pip-delete-this-directory.txt
+# Cache / Logs
+.cache/
+logs/
 
-# Unit test / coverage reports
-nouvelle\Lib\site-packages\CORScanner\**\htmlcov
-nouvelle\Lib\site-packages\CORScanner\**\.tox
-nouvelle\Lib\site-packages\CORScanner\**\.coverage
-nouvelle\Lib\site-packages\CORScanner\**\.coverage.*
-nouvelle\Lib\site-packages\CORScanner\**\.cache
-nouvelle\Lib\site-packages\CORScanner\**\nosetests.xml
-nouvelle\Lib\site-packages\CORScanner\**\coverage.xml
-nouvelle\Lib\site-packages\CORScanner\**\*.cover
-nouvelle\Lib\site-packages\CORScanner\**\.hypothesis
 
-# Translations
-nouvelle\Lib\site-packages\CORScanner\**\*.mo
-nouvelle\Lib\site-packages\CORScanner\**\*.pot
-
-# Django stuff:
-nouvelle\Lib\site-packages\CORScanner\**\*.log
-nouvelle\Lib\site-packages\CORScanner\**\local_settings.py
-
-# Flask stuff:
-nouvelle\Lib\site-packages\CORScanner\**\instance
-nouvelle\Lib\site-packages\CORScanner\**\.webassets-cache
-
-# Scrapy stuff:
-nouvelle\Lib\site-packages\CORScanner\**\.scrapy
-
-# Sphinx documentation
-nouvelle\Lib\site-packages\CORScanner\**\docs\_build
-
-# PyBuilder
-nouvelle\Lib\site-packages\CORScanner\**\target
-
-# Jupyter Notebook
-nouvelle\Lib\site-packages\CORScanner\**\.ipynb_checkpoints
-
-# pyenv
-nouvelle\Lib\site-packages\CORScanner\**\.python-version
-
-# celery beat schedule file
-nouvelle\Lib\site-packages\CORScanner\**\celerybeat-schedule
-
-# SageMath parsed files
-nouvelle\Lib\site-packages\CORScanner\**\*.sage.py
-
-# dotenv
-nouvelle\Lib\site-packages\CORScanner\**\.env
-
-# virtualenv
-nouvelle\Lib\site-packages\CORScanner\**\.venv
-nouvelle\Lib\site-packages\CORScanner\**\venv
-nouvelle\Lib\site-packages\CORScanner\**\ENV
-
-# Spyder project settings
-nouvelle\Lib\site-packages\CORScanner\**\.spyderproject
-nouvelle\Lib\site-packages\CORScanner\**\.spyproject
-
-# Rope project settings
-nouvelle\Lib\site-packages\CORScanner\**\.ropeproject
-
-# mkdocs documentation
-nouvelle\Lib\site-packages\CORScanner\site
-
-# mypy
-nouvelle\Lib\site-packages\CORScanner\**\.mypy_cache
-fly.toml
-
-!requirements.txt
+# ML / Large files
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.onnx
+models/
+data/
