@@ -13,6 +13,7 @@ class User(BaseModel):
             'config': {
                 'color': '#ffffff',
                 'stacks': [],
-                'links': []
+                'links': [],
+                'iconMesh': "",
             }
         }
