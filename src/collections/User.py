@@ -14,6 +14,6 @@ class User(BaseModel):
                 'color': '#ffffff',
                 'stacks': [],
                 'links': [],
-                'iconMesh': '',
+                'iconMeshUrl': '',
             }
         }

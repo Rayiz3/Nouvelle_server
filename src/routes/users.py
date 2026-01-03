@@ -11,7 +11,7 @@ MONGOURI = "mongodb+srv://jusmint:rayiz3@nouvelle.c8ucr.mongodb.net/?retryWrites
 
 client = MongoClient(MONGOURI)
 nouvelle = client['nouvelle'] # cluster
-collection_users = nouvelle['Users'] # collection
+collection_users = nouvelle['Users'] # collection (made automatically)
 
 users_bp = Blueprint('users', __name__)
 user_bp = Blueprint('user', __name__)
