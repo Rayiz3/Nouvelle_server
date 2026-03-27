@@ -22,9 +22,7 @@ meshes_bp = Blueprint('meshes', __name__)
 def add_mesh():
     try:
         user_id = request.args.get("id")
-        if user_id:
-            user_id = ObjectId(user_id)
-        else:
+        if user_id is None:
             return jsonify({"message": "id is not given"}), 400
         
         prompt_data = request.get_json()

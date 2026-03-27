@@ -1,74 +1,5 @@
-import os
-import sys
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-
-import pytest
-from src.routes import users
-from flask import Flask
-from bson import ObjectId
-
-class TempCollection:
-    def __init__(self):
-        self._data = [
-            {
-                "_id": ObjectId(),
-                "email": "dev@test.com",
-                "password": "password123",
-                "name": "DevUser",
-                "config": {
-                    "color": "#2c3e50",
-                    "stacks": ["react","nodejs","docker","postgresql","graphql","aws"],
-                    "links": [
-                        "https://velog.io/@devlog",
-                        "https://github.com/devhub",
-                        "https://notion.so/dev-portfolio",
-                        "",
-                        ""
-                    ],
-                    "iconMeshUrl": "https://pub-example.r2.dev/devmesh1.glb"
-                }
-            },
-            {
-                "_id": ObjectId(),
-                "email": "artist@test.com",
-                "password": "password456",
-                "name": "ArtistUser",
-                "config": {
-                    "color": "#8e44ad",
-                    "stacks": ["blender","unrealengine","substancepainter","photoshop","aftereffects"],
-                    "links": [
-                        "https://artstation.com/artist_portfolio",
-                        "https://behance.net/creativeworks",
-                        "https://youtube.com/@3dcreator",
-                        "https://instagram.com/visual_creator",
-                        ""
-                    ],
-                    "iconMeshUrl": "https://pub-example.r2.dev/devmesh2.glb"
-                }
-            }
-        ]
-
-    def find(self):
-        return self._data
-
-@pytest.fixture
-def app(monkeypatch):
-    app = Flask(__name__)
-
-    monkeypatch.setattr(users, "collection_users", TempCollection())
-
-    app.register_blueprint(users.users_bp, url_prefix="/users")
-    app.register_blueprint(users.user_bp, url_prefix="/user")
-
-    return app
-
-@pytest.fixture
-def client(app):
-    return app.test_client()
-
-def test_get_users(client):
-    response = client.get("/users")
+def test_get_users(users_client):
+    response = users_client.get("/users")
 
     assert response.status_code == 200
 
@@ -79,3 +10,54 @@ def test_get_users(client):
     assert data[0]["name"] == "DevUser"
     assert data[0]["email"] == "dev@test.com"
     assert data[1]["name"] == "ArtistUser"
+
+def test_add_user(users_client):
+    response = users_client.post("/users", json={
+        "email": "testuser@test.com",
+        "password": "testpassword",
+        "name": "testuser",
+    })
+
+    assert response.status_code == 201
+
+    data = response.get_json()
+
+    assert data["message"] == "User created successful"
+    assert data["user"]["email"] == "testuser@test.com"
+    assert data["user"]["name"] == "testuser"
+
+def test_get_user(users_client):
+    response = users_client.get("/user", query_string={"email": "dev@test.com"})
+
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert data["name"] == "DevUser"
+    assert data["email"] == "dev@test.com"
+
+    response = users_client.get("/user", query_string={"id": data["_id"]})
+
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert data["name"] == "DevUser"
+    assert data["email"] == "dev@test.com"
+
+def test_set_config(users_client, users_collection):
+    response = users_client.patch("/user/config",
+        query_string={"id": str(users_collection._data[0]["_id"])},
+        json={
+            "color": "#e74c3c",
+            "stacks": ["react", "nodejs"],
+            "links": [
+                "https://velog.io/@devlog",
+            ]
+        }
+    )
+
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert data["config"]["color"] == "#e74c3c"
+    assert data["config"]["stacks"] == ["react", "nodejs"]
+    assert data["config"]["links"] == ["https://velog.io/@devlog"]
